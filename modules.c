@@ -106,6 +106,7 @@ int request_callback(HTTP_request request, HTTP_response *response)
 				return -1;
 			}
 
+			response->buffer_size = sizeof(msg);
 			memcpy(response->buffer, msg, sizeof(msg));
 //			DEBUG("response buffer: %s\n", response->buffer);
 			response->status_code = HTTP_STATUS_200;
