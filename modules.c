@@ -43,7 +43,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#define HOMEPAGE_FILE ("./media/test.html")
+#define HOMEPAGE_FILE ("./media/car.html")
 
 static uint8_t *get_file_contents(const char *name, size_t *file_size)
 {
@@ -82,6 +82,8 @@ static uint8_t *get_file_contents(const char *name, size_t *file_size)
 	return buffer;
 }
 
+static unsigned long post_num = 0;
+
 int request_callback(HTTP_request request, HTTP_response *response)
 {
 	/*
@@ -99,8 +101,9 @@ int request_callback(HTTP_request request, HTTP_response *response)
 			break;
 		}
 		case HTTP_POST: {
-			DEBUG("recieved post request.\n");
-			uint8_t msg[] = "Recieved a post request!\n";
+			printf("%lu: %s\n", post_num++, request.payload);
+
+			uint8_t msg[] = "";
 			response->buffer = malloc(sizeof(msg));
 			if (UNLIKELY(response->buffer == NULL)) {
 				return -1;
@@ -108,7 +111,6 @@ int request_callback(HTTP_request request, HTTP_response *response)
 
 			response->buffer_size = sizeof(msg);
 			memcpy(response->buffer, msg, sizeof(msg));
-//			DEBUG("response buffer: %s\n", response->buffer);
 			response->status_code = HTTP_STATUS_200;
 			break;
 		}
