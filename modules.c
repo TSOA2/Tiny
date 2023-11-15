@@ -82,7 +82,6 @@ static uint8_t *get_file_contents(const char *name, size_t *file_size)
 	return buffer;
 }
 
-//static unsigned long post_num = 0;
 
 int request_callback(HTTP_request request, HTTP_response *response)
 {
@@ -101,8 +100,7 @@ int request_callback(HTTP_request request, HTTP_response *response)
 			break;
 		}
 		case HTTP_POST: {
-			printf("%s\n", request.payload);
-
+/*
 			uint8_t msg[] = "";
 			response->buffer = malloc(sizeof(msg));
 			if (UNLIKELY(response->buffer == NULL)) {
@@ -111,6 +109,11 @@ int request_callback(HTTP_request request, HTTP_response *response)
 
 			response->buffer_size = sizeof(msg);
 			memcpy(response->buffer, msg, sizeof(msg));
+*/
+
+			printf("%s\n", request.payload);
+			response->buffer = NULL;
+			response->buffer_size = 0;
 			response->status_code = HTTP_STATUS_200;
 			break;
 		}

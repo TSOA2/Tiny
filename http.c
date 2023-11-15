@@ -61,10 +61,13 @@ static int send_data(int client_socket, HTTP_response response)
 		return -1;
 	}
 
-	if (send(client_socket, response.buffer, response.buffer_size, 0) != response.buffer_size) {
-		perror(ERR "send_data():send()");
-		return -1;
+	if (response.buffer != NULL && response.buffer_size > 0) {
+		if (send(client_socket, response.buffer, response.buffer_size, 0) != response.buffer_size) {
+			perror(ERR "send_data():send()");
+			return -1;
+		}
 	}
+
 	return 0;
 }
 

@@ -1,7 +1,7 @@
 #ifndef TINY_HEADER
 #define TINY_HEADER
 
-#define ENABLE_DEBUG 1
+#define ENABLE_DEBUG 0
 
 #include <stdio.h>
 #include <stdlib.h>
