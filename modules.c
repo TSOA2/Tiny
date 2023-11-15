@@ -82,7 +82,7 @@ static uint8_t *get_file_contents(const char *name, size_t *file_size)
 	return buffer;
 }
 
-static unsigned long post_num = 0;
+//static unsigned long post_num = 0;
 
 int request_callback(HTTP_request request, HTTP_response *response)
 {
@@ -101,7 +101,7 @@ int request_callback(HTTP_request request, HTTP_response *response)
 			break;
 		}
 		case HTTP_POST: {
-			printf("%lu: %s\n", post_num++, request.payload);
+			printf("%s\n", request.payload);
 
 			uint8_t msg[] = "";
 			response->buffer = malloc(sizeof(msg));

@@ -23,7 +23,7 @@ const char *status_codes[] = {
 
 static size_t recv_data(int client_socket, uint8_t buffer[MAX_REQ_SIZE], int *error)
 {
-	size_t recvd;
+	ssize_t recvd;
 
 	*error = 0;
 	if ((recvd=recv(client_socket, buffer, MAX_REQ_SIZE, 0)) < 0) {
@@ -31,7 +31,7 @@ static size_t recv_data(int client_socket, uint8_t buffer[MAX_REQ_SIZE], int *er
 		*error = 1;
 	}
 
-	return recvd;
+	return (size_t) recvd;
 }
 
 static int send_data(int client_socket, HTTP_response response)
@@ -122,6 +122,7 @@ static int parse_request(HTTP_request *request, uint8_t *buffer, size_t buffer_s
 		}
 	}
 
+	DEBUG("=== I: %lu/%lu\n", i, buffer_size);
 	request->payload = malloc(buffer_size - i + 1);
 	if (UNLIKELY(request->payload == NULL)) {
 		perror(ERR "parse_request():malloc()");
@@ -130,7 +131,7 @@ static int parse_request(HTTP_request *request, uint8_t *buffer, size_t buffer_s
 	memcpy(request->payload, &buffer[i], buffer_size - i);
 	request->payload[buffer_size - i] = '\0';
 
-	DEBUG("HTTP payload: \"%s\"\n", (char *) request->payload);
+	DEBUG("HTTP payload: \"%s\"\n", (char *) &buffer[i]);
 	return 0;
 }
 
